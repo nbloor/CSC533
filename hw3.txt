@@ -1,0 +1,17 @@
+var nums gets [1 3 0 5]
+var length gets (#nums)
+var index gets 0
+var negativeEncountered gets "no"
+var numNonNegative gets 0
+var sum gets 0
+while (index < length) do
+	if ((nums @ index) < 0) then
+		negativeEncountered gets "yes"
+		index gets (length + -1)
+	else 
+		numNonNegative gets (numNonNegative + 1)
+		sum gets (sum + (nums @ index))
+	endif
+	index gets (index + 1)
+endwhile
+print [numNonNegative sum negativeEncountered]
