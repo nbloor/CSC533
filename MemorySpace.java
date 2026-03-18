@@ -120,14 +120,29 @@ public class MemorySpace {
         return this.runtimeStack.peek().declaredInScope(variable);
     }
 
-    public void storeSubroutines(String name, Body body){
+    /**
+     * Stores a subroutine definition in the subroutines HashMap.
+     * @param name the name of the subroutine
+     * @param body the body of the subroutine
+     */
+    public void storeSubroutine(String name, Body body){
         this.subroutines.put(name, body);
     }
 
+    /**
+     * Retrieves subroutine definition from subroutines HashMap.
+     * @param name the name of the subroutine
+     * @return the body of the subroutine
+     */
     public Body retrieveSubroutine(String name){
         return this.subroutines.get(name);
     }
 
+    /**
+     * Determines if a subroutine is already declared in the subroutines HashMap.
+     * @param name the name of the subroutine being checked
+     * @return true if already declared, false otherwise
+     */
     public boolean isSubroutineDeclared(String name){
         return this.subroutines.containsKey(name);
     }
