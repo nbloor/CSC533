@@ -3,7 +3,7 @@ public class Call extends Statement {
 
     public Call(TokenStream input) throws Exception {
         if (!input.next().toString().equals("call")) {
-            throw new Exception("SYNTAX ERROR: Malformed subroutine call. call");
+            throw new Exception("SYNTAX ERROR: Malformed subroutine call");
         }
         this.name = input.next().toString();
         if (!input.next().toString().equals("(") || !input.next().toString().equals(")")) {
