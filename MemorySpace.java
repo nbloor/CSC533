@@ -1,15 +1,17 @@
 import java.util.Stack;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Class that defines the memory space for the SILLY interpreter.
  *   @author Dave Reed
  *   Modified by Nick Bloor
- *   @version 2/16/2026
+ *   @version 3/17/2026
  */
 public class MemorySpace {
     private Stack<ScopeRecord> runtimeStack;
     private ArrayList<String> heapSpace;
+    private HashMap<String, Body> subroutines;
 
     /**
      * Constructs an empty memory space.
@@ -18,6 +20,7 @@ public class MemorySpace {
         this.runtimeStack = new Stack<ScopeRecord>();
         this.runtimeStack.push(new ScopeRecord(null));
         this.heapSpace = new ArrayList<String>();
+        this.subroutines = new HashMap<String, Body>();
     }
     
     /**
@@ -115,5 +118,17 @@ public class MemorySpace {
      */
     public boolean isLocal(Token variable){
         return this.runtimeStack.peek().declaredInScope(variable);
+    }
+
+    public void storeSubroutines(String name, Body body){
+        this.subroutines.put(name, body);
+    }
+
+    public Body retrieveSubroutine(String name){
+        return this.subroutines.get(name);
+    }
+
+    public boolean isSubroutineDeclared(String name){
+        return this.subroutines.containsKey(name);
     }
 }
