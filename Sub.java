@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Sub extends Statement {
     private String name;
     private Body body;
+    private ArrayList<Token> params;
 
     /**
      * Reads in a subroutine definition from the specified stream.
@@ -21,9 +22,13 @@ public class Sub extends Statement {
         if (!input.next().toString().equals("(")) {
             throw new Exception("SYNTAX ERROR: Malformed subroutine definition.");
         }
-        if (!input.next().toString().equals(")")) {
-            throw new Exception("SYNTAX ERROR: Malformed subroutine definition.");
+
+        this.params = new ArrayList<Token>();
+        while(!input.lookAhead().toString().equals(")")) {
+            params.add((Token)input.next());
         }
+        input.next();
+
         if (!input.next().toString().equals("does")) {
             throw new Exception("SYNTAX ERROR: Malformed subroutine definition.");
         }
@@ -36,13 +41,14 @@ public class Sub extends Statement {
     }
 
     /**
-     * Executes the current subroutine definition. This shouldn'e execute the sub yet, but should modify MemorySpace with definition.
+     * Execute the current subroutine definition. This doesn't call the sub yet, but stores definition.
      */
     public Statement.Status execute() throws Exception {        
         if (Interpreter.MEMORY.isSubroutineDeclared(this.name)){
             throw new Exception ("RUNTIME ERROR: Subroutine " + this.name + " already declared");
         }
         Interpreter.MEMORY.storeSubroutine(this.name, this.body);
+        Interpreter.MEMORY.storeSubroutineParameters(this.name, this.params);
         return Statement.Status.OK;
     }
 
@@ -51,6 +57,6 @@ public class Sub extends Statement {
      * @return the string representation
      */
     public String toString(){
-        return "sub " + this.name + " do\n" + this.body.toString() + "endsub\n";
+        return "sub " + this.name + "(" + this.params + ") do\n" + this.body.toString() + "endsub\n";
     }
 }

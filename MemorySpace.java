@@ -12,6 +12,7 @@ public class MemorySpace {
     private Stack<ScopeRecord> runtimeStack;
     private ArrayList<String> heapSpace;
     private HashMap<String, Body> subroutines;
+    private HashMap<String, ArrayList<Token>> subroutineParameters;
 
     /**
      * Constructs an empty memory space.
@@ -21,6 +22,7 @@ public class MemorySpace {
         this.runtimeStack.push(new ScopeRecord(null));
         this.heapSpace = new ArrayList<String>();
         this.subroutines = new HashMap<String, Body>();
+        this.subroutineParameters = new HashMap<String, ArrayList<Token>>();
     }
     
     /**
@@ -145,5 +147,31 @@ public class MemorySpace {
      */
     public boolean isSubroutineDeclared(String name){
         return this.subroutines.containsKey(name);
+    }
+
+    /**
+     * Stores the parameter names for a subroutine in the subroutineParameters HashMap.
+     * @param name the name of the subroutine
+     * @param parameters the list of parameter names for the subroutine
+     */
+    public void storeSubroutineParameters(String name, ArrayList<Token> parameters){
+        this.subroutineParameters.put(name, parameters);
+    }
+
+    /**
+     * Retrieves the parameter names for a subroutine from the subroutineParameters HashMap.
+     * @param name the name of the subroutine
+     * @return the list of parameter names for the subroutine
+     */
+    public ArrayList<Token> getSubroutineParameters(String name){
+        return this.subroutineParameters.get(name);
+    }
+
+    public void createSubScope(){
+        this.runtimeStack.push(new ScopeRecord(null));
+    }
+
+    public void endSubScope(){
+        this.runtimeStack.pop();
     }
 }
