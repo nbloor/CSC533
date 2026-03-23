@@ -69,7 +69,10 @@ public class If extends Statement {
             
             // If condition is null, it's an else clause (always execute)
             if (cond == null) {
-                this.bodies.get(i).execute();
+                Statement.Status status = this.bodies.get(i).execute();
+                if (status != Statement.Status.OK) {
+                    return status;
+                }
                 return Statement.Status.OK;
             }
             
@@ -80,8 +83,8 @@ public class If extends Statement {
             
             if ((Boolean)eVal.getValue()) {
                 Statement.Status status = this.bodies.get(i).execute();
-                if (status == Statement.Status.BREAK) {
-                    return Statement.Status.BREAK;
+                if (status != Statement.Status.OK) {
+                    return status;
                 }
                 return Statement.Status.OK;
             }

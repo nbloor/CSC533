@@ -1,10 +1,20 @@
 import java.util.ArrayList;
 
+/**
+ * Class that reads in a subroutine call in SILLY and exewcutes the body with specified inputs.
+ * @author Nick Bloor
+ * @version 3/23/26
+ */
 public class Call extends Statement {
     private String name;
     private ArrayList<Expression> inputs;
 
 
+    /**
+     * Reads in a subroutine call from the specified stream.
+     * @param input the stream to be read from
+     * @throws Exception if the call is malformed
+     */
     public Call(TokenStream input) throws Exception {
         if (!input.next().toString().equals("call")) {
             throw new Exception("SYNTAX ERROR: Malformed subroutine call");
@@ -22,6 +32,11 @@ public class Call extends Statement {
         input.next();
     }
 
+    /**
+     * Executes the subroutine call by evaluating inputs, creating new scope, and executing the body.
+      * @return the status of the execution
+      * @throws Exception if the subroutine is not declared or if there is a mismatch in number of parameters
+     */
     public Statement.Status execute() throws Exception {
         if (!Interpreter.MEMORY.isSubroutineDeclared(this.name)) {
             throw new Exception("RUNTIME ERROR: Subroutine " + this.name + " not declared");
@@ -51,6 +66,10 @@ public class Call extends Statement {
         return results;
     }
 
+    /**
+     * Returns a string representation of the subroutine call.
+     * @return the string representation
+     */
     public String toString() {
         return this.name + "(" + this.inputs + ")";
     }

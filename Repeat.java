@@ -43,6 +43,9 @@ public class Repeat extends Statement {
             if (status == Statement.Status.BREAK) {
                 break;
             }
+            if (status == Statement.Status.EXIT) {
+                return Statement.Status.EXIT;
+            }
         }
         return Statement.Status.OK;
     }

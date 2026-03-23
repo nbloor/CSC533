@@ -44,6 +44,9 @@ public class While extends Statement {
                 if (status == Statement.Status.BREAK) {
                     break;
                 }
+                if (status == Statement.Status.EXIT) {
+                    return Statement.Status.EXIT;
+                }
             }
             else {
             	break;

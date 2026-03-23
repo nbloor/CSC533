@@ -6,7 +6,7 @@ import java.util.HashMap;
  * Class that defines the memory space for the SILLY interpreter.
  *   @author Dave Reed
  *   Modified by Nick Bloor
- *   @version 3/17/2026
+ *   @version 3/23/2026
  */
 public class MemorySpace {
     private Stack<ScopeRecord> runtimeStack;
@@ -167,10 +167,16 @@ public class MemorySpace {
         return this.subroutineParameters.get(name);
     }
 
+    /**
+     * Creates a new blank scope that points to null so that it does not read in globals
+     */
     public void createSubScope(){
         this.runtimeStack.push(new ScopeRecord(null));
     }
 
+    /**
+     * Pops current scope off the stack, returning to global
+     */
     public void endSubScope(){
         this.runtimeStack.pop();
     }
