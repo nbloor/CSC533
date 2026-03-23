@@ -40,7 +40,7 @@ public class Sub extends Statement {
      */
     public Statement.Status execute() throws Exception {        
         if (Interpreter.MEMORY.isSubroutineDeclared(this.name)){
-            throw new Exception ("RUNTIME ERROR: Subroutine already declared");
+            throw new Exception ("RUNTIME ERROR: Subroutine " + this.name + " already declared");
         }
         Interpreter.MEMORY.storeSubroutine(this.name, this.body);
         return Statement.Status.OK;

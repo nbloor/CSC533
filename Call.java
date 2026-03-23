@@ -13,7 +13,7 @@ public class Call extends Statement {
 
     public Statement.Status execute() throws Exception {
         if (!Interpreter.MEMORY.isSubroutineDeclared(this.name)) {
-            throw new Exception("RUNTIME ERROR: Subroutine '" + this.name + "' not declared");
+            throw new Exception("RUNTIME ERROR: Subroutine " + this.name + " not declared");
         }
         Body body = Interpreter.MEMORY.retrieveSubroutine(this.name);
         return body.execute();
